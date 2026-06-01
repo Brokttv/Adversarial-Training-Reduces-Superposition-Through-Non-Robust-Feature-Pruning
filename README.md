@@ -75,7 +75,7 @@ The script prints:
 2. **Training progress** - Epoch updates every 1000 steps per sparsity level
 3. **Analysis results** - Feature dropping statistics and robust/non-robust breakdown for each sparsity level
 
-Key metrics computed and displayed:
+# Key metrics computed and displayed:
 - Superposition (Φ = ||W||_F / n)
 - Representational power (P = ||W||_F²)
 - Interference (mean off-diagonal Gram matrix entries)
@@ -86,7 +86,7 @@ Key metrics computed and displayed:
 
 ## Detailed Interference Analysis
 
-After running `main.py`, use `analysis.py` for deeper investigation:
+**After running `main.py`, use `analysis.py` for further investigation:**
 
 ```bash
 # Default analysis
