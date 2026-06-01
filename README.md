@@ -108,10 +108,5 @@ python analysis.py --results-file my_results.pkl
 - Robust vs non-robust feature interference breakdown
 - Feature type analysis (which features are dropped)
 
-## Implementation Notes
 
-- Uses `structured_data()` to create data with known robust/non-robust classes (70 robust, 30 non-robust by default)
-- Adversarial training loss: 0.5 * L_clean + 0.5 * L_adv
-- Model: 20 hidden dims encoding 100 features (creates superposition)
-- Cleanup: Models deleted after each sparsity level to save memory
 
