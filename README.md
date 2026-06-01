@@ -1,5 +1,8 @@
 
-## Quick Start
+## Setup
+```bash
+pip install -r requirements.txt
+```
 
 
 ## Requirements
