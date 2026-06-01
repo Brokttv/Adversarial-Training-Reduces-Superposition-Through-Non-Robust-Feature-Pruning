@@ -1,4 +1,8 @@
 
+This repo includes the code of my most recent blog: [Adversarial Training Reduces Superposition Through Non-Robust Feature Pruning](https://brokttv.github.io/blog-2/)
+
+
+
 ## Setup
 ```bash
 pip install -r requirements.txt
