@@ -68,7 +68,9 @@ The script prints:
 2. **Training progress** - Epoch updates every 1000 steps per sparsity level
 3. **Analysis results** - Feature dropping statistics and robust/non-robust breakdown for each sparsity level
 
-# Key metrics computed and displayed:
+<br>
+
+## Key metrics computed and displayed:
 - Superposition (Φ = ||W||_F / n)
 - Representational power (P = ||W||_F²)
 - Interference (mean off-diagonal Gram matrix entries)
@@ -76,6 +78,8 @@ The script prints:
 - Robust vs. non-robust feature overlap
 
 **Results are saved to `results.pkl`** for later analysis.
+
+<br>
 
 ## Detailed Interference Analysis
 
