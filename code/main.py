@@ -4,7 +4,7 @@ from torch.utils.data import TensorDataset, DataLoader
 import gc
 import argparse
 
-from data import structured_data
+from data import structured_data, normal_data
 from model import Model
 from training import adv_train, clean_train
 from utils import (
@@ -101,6 +101,14 @@ def parse_args():
         help="Learning rate (default: 1e-3)"
     )
     
+    parser.add_argument(
+        "--data-type",
+        type=str,
+        choices=["normal", "structured"],
+        default="structured",
+        help="Data type: 'normal' (random features) or 'structured' (with known robust/non-robust) (default: structured)"
+    )
+    
     return parser.parse_args()
 
 
@@ -133,6 +141,7 @@ if __name__ == "__main__":
     print(f"\n{'='*60}")
     print("Configuration")
     print(f"{'='*60}")
+    print(f"Data type: {args.data_type}")
     print(f"Epochs: {EPOCHS}")
     print(f"Batch size: {BATCH_SIZE}")
     print(f"Sparsity levels: {SPARSITY_LEVELS}")
@@ -154,12 +163,23 @@ if __name__ == "__main__":
         print(f"{'='*60}")
         
         # Create data
-        train_input, train_target, robust_idx, non_robust_idx = structured_data(
-            sparsity=sparsity,
-            num_samples=N_SAMPLES,
-            n_features=N_FEATURES,
-            n_robust=N_ROBUST
-        )
+        if args.data_type == "structured":
+            train_input, train_target, robust_idx, non_robust_idx = structured_data(
+                sparsity=sparsity,
+                num_samples=N_SAMPLES,
+                n_features=N_FEATURES,
+                n_robust=N_ROBUST
+            )
+            has_feature_types = True
+        else:  # normal
+            train_input, train_target = normal_data(
+                sparsity=sparsity,
+                num_samples=N_SAMPLES,
+                n_features=N_FEATURES
+            )
+            robust_idx = torch.tensor([])
+            non_robust_idx = torch.tensor([])
+            has_feature_types = False
         
         train_dataset = TensorDataset(train_input, train_target)
         train_dataloader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
@@ -246,24 +266,25 @@ if __name__ == "__main__":
               f"std: {col_norms_adv.std():.4f}, "
               f"num dropped (<{FEATURE_DROP_THRESHOLD}): {(col_norms_adv < FEATURE_DROP_THRESHOLD).sum().item()}")
         
-        # Feature type analysis
-        print(f"\nFeature breakdown:")
-        print(f"  Robust features: {robust_idx.tolist()}")
-        print(f"  Non-robust features: {non_robust_idx.tolist()}")
-        
-        # Check which features are dropped in adversarial model
-        dropped_adv = results[sparsity]['dropped_idx_adv']
-        
-        # Count overlap with non-robust features
-        overlap_non_robust = len(set(dropped_adv.tolist()) & set(non_robust_idx.tolist()))
-        overlap_robust = len(set(dropped_adv.tolist()) & set(robust_idx.tolist()))
-        
-        print(f"\nAdversarial model drops:")
-        print(f"  {overlap_non_robust}/{len(non_robust_idx)} non-robust features")
-        print(f"  {overlap_robust}/{len(robust_idx)} robust features")
-        
-        if len(dropped_adv) > 0:
-            print(f"  Dropped feature indices: {dropped_adv.tolist()}")
+        # Feature type analysis (only for structured data)
+        if has_feature_types and len(results[sparsity]['robust_idx']) > 0:
+            print(f"\nFeature breakdown:")
+            print(f"  Robust features: {robust_idx.tolist()}")
+            print(f"  Non-robust features: {non_robust_idx.tolist()}")
+            
+            # Check which features are dropped in adversarial model
+            dropped_adv = results[sparsity]['dropped_idx_adv']
+            
+            # Count overlap with non-robust features
+            overlap_non_robust = len(set(dropped_adv.tolist()) & set(non_robust_idx.tolist()))
+            overlap_robust = len(set(dropped_adv.tolist()) & set(robust_idx.tolist()))
+            
+            print(f"\nAdversarial model drops:")
+            print(f"  {overlap_non_robust}/{len(non_robust_idx)} non-robust features")
+            print(f"  {overlap_robust}/{len(robust_idx)} robust features")
+            
+            if len(dropped_adv) > 0:
+                print(f"  Dropped feature indices: {dropped_adv.tolist()}")
 
     print(f"\n{'='*60}")
     print("Experiment complete!")
