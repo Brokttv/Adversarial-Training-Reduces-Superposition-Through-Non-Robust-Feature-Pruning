@@ -51,16 +51,6 @@ python main.py --data-type structured
 python main.py --data-type normal
 ```
 
-### Fast experiment (fewer epochs, smaller dataset):
-```bash
-python main.py --epochs 100 --n-samples 1000 --sparsity 0.8 0.88
-```
-
-### GPU-accelerated with custom learning rate:
-```bash
-python main.py --device cuda --lr 5e-3 --epochs 2000
-```
-
 ### Single sparsity level with custom metrics threshold:
 ```bash
 python main.py --sparsity 0.85 --threshold 0.005 --epochs 500
