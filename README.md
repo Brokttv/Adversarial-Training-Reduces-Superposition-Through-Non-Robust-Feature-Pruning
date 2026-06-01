@@ -106,7 +106,7 @@ python analysis.py --results-file my_results.pkl
 - Per-feature interference (sum of Gram matrix off-diagonal entries)
 - Kept vs dropped feature interference statistics
 - Robust vs non-robust feature interference breakdown
-- Feature type analysis (which non-robust features are dropped)
+- Feature type analysis (which features are dropped)
 
 ## Implementation Notes
 
