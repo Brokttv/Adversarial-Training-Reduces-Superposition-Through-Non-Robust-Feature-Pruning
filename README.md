@@ -16,7 +16,7 @@ torch
 numpy
 ```
 
-### Default run (all defaults from paper):
+### Default run:
 ```bash
 python main.py
 ```
