@@ -1,5 +1,5 @@
 
-This repo includes the code of my most recent research: [Adversarial Training Reduces Superposition Through Non-Robust Feature Pruning](https://brokttv.github.io/blog-2/)
+This repo includes the code of my most recent research work: [Adversarial Training Reduces Superposition Through Non-Robust Feature Pruning](https://brokttv.github.io/blog-2/)
 
 
 
