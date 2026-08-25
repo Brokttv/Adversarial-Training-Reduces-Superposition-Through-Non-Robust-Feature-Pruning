@@ -1,5 +1,5 @@
 
-This repo includes the code of my most recent research work: [Adversarial Training Reduces Superposition Through Non-Robust Feature Pruning](https://drive.google.com/file/d/1NfyJG78SOFYjbp5ASrZabzXGHrpQYXeg/view?usp=sharing)
+This repo includes the code of my most recent research work: [Adversarial Training Reduces Superposition Through Non-Robust Feature Pruning](https://arxiv.org/abs/2608.22155)
 
 
 
